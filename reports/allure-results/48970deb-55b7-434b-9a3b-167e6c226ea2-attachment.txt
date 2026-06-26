@@ -1,0 +1,4 @@
+PASS — item added to cart
+PASS — cart contains correct item
+PASS — order summary page loaded
+PASS — order completed successfully

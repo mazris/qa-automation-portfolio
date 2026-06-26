@@ -1,5 +1,9 @@
 import sys
 import os
+
+import allure
+import pytest
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from pages.login_page import LoginPage
@@ -8,6 +12,9 @@ from pages.inventory_page import InventoryPage
 from pages.cart_page import CartPage
 from data.test_data import TestData
 
+@pytest.mark.smoke
+@allure.suite("Smoke Suite")
+@allure.description("Verify that a full checkout workflow works correctly from login to confirmation")
 def test_full_checkout_flow(page):
     # Step 1 — login
     login = LoginPage(page)
@@ -57,8 +64,17 @@ def test_full_checkout_flow(page):
     print("PASS — order completed successfully")
 
     # Screenshot as evidence
-    page.screenshot(path="checkout_complete.png")
+    screenshot = page.screenshot()
+    allure.attach(
+        screenshot,
+        name="checkout complete",
+        attachment_type=allure.attachment_type.PNG
+    )
 
+
+@pytest.mark.regression
+@allure.suite("Regression Suite")
+@allure.description("Verify that a user can add items to cart and remove them from cart")
 def test_add_and_remove_from_cart(page):
     #Login first
     login = LoginPage(page)

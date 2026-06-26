@@ -1,10 +1,17 @@
 import sys
 import os
+
+import allure
+import pytest
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from pages.login_page import LoginPage
 from data.test_data import TestData
 
+@pytest.mark.smoke
+@allure.suite("Smoke Suite")
+@allure.description("Verify that a valid user can login and is redirected to the products page")
 def test_valid_login(page):
     login = LoginPage(page)
     login.navigate()
@@ -19,6 +26,9 @@ def test_valid_login(page):
     assert title == TestData.PRODUCTS_TITLE, f"Expected '{TestData.PRODUCTS_TITLE}' but got '{title}'"
     print("PASS — valid login navigates to products page")
 
+@pytest.mark.regression
+@allure.suite("Regression Suite")
+@allure.description("Verify that a invalid credebtials show the correct error message")
 def test_invalid_login(page):
     login = LoginPage(page)
     login.navigate()
@@ -31,6 +41,9 @@ def test_invalid_login(page):
     assert error == TestData.LOGIN_ERROR, f"Expected '{TestData.LOGIN_ERROR}' but got '{error}'"
     print("PASS — invalid login shows correct error message")
 
+@pytest.mark.regression
+@allure.suite("Regression Suite")
+@allure.description("Verify that a a locked out user see the correct error message")
 def test_locked_user_login(page):
     login = LoginPage(page)
     login.navigate()

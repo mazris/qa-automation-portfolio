@@ -61,5 +61,15 @@ Tests stay clean and data is easy to maintain.
 **wait_for_load_state over wait_for_url** - learned through debugging that networkidle is more reliable than URL pattern matching for single-page app navigation.
 
 
+## Reporting
 
+Tests generate an Allure report automatically after each run.
+The report includes test status, suite grouping, descriptions, 
+and screenshots on failure.
 
+Run with automatic report:
+```
+./run_tests.sh          # all tests
+./run_tests.sh smoke    # smoke suite only
+./run_tests.sh regression  # regression suite only
+```
