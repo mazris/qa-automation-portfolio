@@ -8,11 +8,11 @@ mkdir -p $REPORT_DIR
 
 echo "Running $SUITE suite..."
 if [ "$SUITE" = "smoke" ]; then
-    pytest tests/ -v -m smoke --alluredir=$REPORT_DIR
+    pytest tests/ api/ -v -m smoke --alluredir=$REPORT_DIR
 elif [ "$SUITE" = "regression" ]; then
-    pytest tests/ -v -m regression --alluredir=$REPORT_DIR
+    pytest tests/ api/ -v -m regression --alluredir=$REPORT_DIR
 else
-    pytest tests/ -v --alluredir=$REPORT_DIR
+    pytest tests/ api/ -v --alluredir=$REPORT_DIR
 fi
 
 echo "Generating Allure report..."
