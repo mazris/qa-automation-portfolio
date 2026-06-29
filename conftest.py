@@ -1,6 +1,7 @@
 import allure
 import pytest
 from playwright.sync_api import sync_playwright
+from db.db_helper import DBHelper
 
 def pytest_configure(config):
     config.addinivalue_line("markers", "smoke: smoke test suite")
@@ -33,5 +34,13 @@ def pytest_runtest_makereport(item, call):
                 name="screenshot on failure",
                 attachment_type=allure.attachment_type.PNG
             )
+
+@pytest.fixture(scope="function")
+def db():
+    helper = DBHelper()
+    yield helper
+    helper.reset_all_test_data()
+    helper.disconnect()
+
 
 
