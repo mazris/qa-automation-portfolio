@@ -28,7 +28,6 @@ def test_get_valid_user(client):
     assert data["id"] == 1 , f"Expected {1} but got {data['id']}"
     assert "name" in data, "Response missing name field"
     assert "email" in data, "Response missing email field"
-    print("PASS — valid user retrieved successfully")
 
 @pytest.mark.regression
 @allure.suite("Regression Suite")
@@ -36,7 +35,6 @@ def test_get_valid_user(client):
 def test_get_non_existent_user(client):
     response = client.get_user(999)
     assert response.status_code == 404, f"Expected 404 but got {response.status_code}"
-    print("PASS — non-existent user returns 404")
 
 @pytest.mark.regression
 @allure.suite("Regression Suite")
@@ -54,7 +52,6 @@ def test_create_user(client):
     data = response.json()
     assert data["name"] == "Sarah Johnson", f"Expected Sarah Johnson but got {data['name']}"
     assert "id" in data, "Response missing id field — user was not created"
-    print(f"PASS — user created with id {data['id']}")
 
 @pytest.mark.regression
 @allure.suite("Regression Suite")
@@ -73,7 +70,6 @@ def test_update_user(client):
     data = response.json()
     assert data["name"] == "Sarah Johnson Updated", \
         f"Expected updated name but got {data['name']}"
-    print("PASS — user updated successfully")
 
 @pytest.mark.regression
 @allure.suite("Regression Suite")
@@ -82,7 +78,6 @@ def test_delete_user(client):
 
     response = client.delete_user(1)
     assert response.status_code == 200, f"Expected 200 but got {response.status_code}"
-    print("PASS — user deleted successfully")
 
 @pytest.mark.regression
 @allure.suite("Regression Suite")
@@ -93,6 +88,5 @@ def test_get_all_users(client):
     data = response.json()
     assert len(data) > 0, "Expected users list but got empty response"
     assert "name" in data[0], "First user missing name field"
-    print(f"PASS — {len(data)} users returned successfully")
 
 

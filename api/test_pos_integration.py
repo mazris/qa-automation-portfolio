@@ -37,8 +37,6 @@ def test_get_customer_matches_db(pos_client, db):
     assert api_customer["loyalty_points"] == db_customer["loyalty_points"], \
         "Loyalty points mismatch between API and DB"
 
-    print(f"PASS — API customer data matches DB: {api_customer['name']}")
-
 @pytest.mark.regression
 @allure.suite("Regression Suite")
 @allure.description(
@@ -70,7 +68,6 @@ def test_apply_active_promo_code(pos_client, db):
 
     # Step 4 — cleanup
     db.delete_promo_code("TESTPROMO")
-    print(f"PASS — promo applied correctly via real API+DB: ${data['final_total']}")
 
 @pytest.mark.regression
 @allure.suite("Regression Suite")
@@ -88,7 +85,6 @@ def test_apply_inactive_promo_code(pos_client, db):
 
     # Cleanup
     db.delete_promo_code("EXPIRED1")
-    print("PASS — inactive promo code correctly rejected")
 
 
 @pytest.mark.regression
@@ -104,7 +100,6 @@ def test_update_loyalty_points_persists_to_db(pos_client, db):
 
     # Step 2 — real API call to update points
     response = pos_client.update_loyalty_points(1, 250)
-    print(f"DEBUG: API response = {response.json()}")
     assert response.status_code == 200, \
         f"Expected 200 but got {response.status_code}"
 
@@ -115,8 +110,5 @@ def test_update_loyalty_points_persists_to_db(pos_client, db):
 
     # Step 4 — verify directly in the DB, independent of the API
     db_customer = db.get_customer_by_id(1)
-    print(f"DEBUG: DB customer right before assert = {db_customer}")
     assert db_customer["loyalty_points"] == 250, \
         f"Expected 250 in DB but got {db_customer['loyalty_points']}"
-
-    print("PASS — loyalty points update verified in both API response and DB")

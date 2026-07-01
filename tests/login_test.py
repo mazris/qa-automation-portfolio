@@ -24,7 +24,6 @@ def test_valid_login(page):
 
     #assert condition, message_if_it_fails
     assert title == TestData.PRODUCTS_TITLE, f"Expected '{TestData.PRODUCTS_TITLE}' but got '{title}'"
-    print("PASS — valid login navigates to products page")
 
 @pytest.mark.regression
 @allure.suite("Regression Suite")
@@ -39,7 +38,6 @@ def test_invalid_login(page):
     assert login.is_error_visible(), "FAIL — error message not visible"
     error = login.get_error_message()
     assert error == TestData.LOGIN_ERROR, f"Expected '{TestData.LOGIN_ERROR}' but got '{error}'"
-    print("PASS — invalid login shows correct error message")
 
 @pytest.mark.regression
 @allure.suite("Regression Suite")
@@ -54,6 +52,6 @@ def test_locked_user_login(page):
     assert login.is_error_visible(), "FAIL — error message not visible"
     error = login.get_error_message()
     assert error == TestData.LOCKED_ERROR, f"Expected '{TestData.LOCKED_ERROR}' but got '{error}'"
-    print("PASS — locked user sees correct error message")
+
 
 

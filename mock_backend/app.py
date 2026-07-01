@@ -69,7 +69,6 @@ def apply_promo():
 def update_loyalty_points(customer_id):
     data = request.get_json()
     new_points = data.get("points")
-    print(f"DEBUG: received points = {new_points}, type = {type(new_points)}")
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -78,11 +77,9 @@ def update_loyalty_points(customer_id):
         (new_points, customer_id)
     )
     conn.commit()
-    print(f"DEBUG: rows affected = {cursor.rowcount}")
 
     cursor.execute("SELECT * FROM customers WHERE id = %s", (customer_id,))
     updated_customer = cursor.fetchone()
-    print(f"DEBUG: after update, customer = {updated_customer}")
 
     cursor.close()
     conn.close()

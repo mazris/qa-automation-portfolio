@@ -30,7 +30,6 @@ def test_full_checkout_flow(page):
     assert inventory.get_title() == TestData.PRODUCTS_TITLE
     inventory.add_item_to_cart_by_name("Sauce Labs Backpack")
     assert inventory.get_cart_count() == 1, "FAIL — cart count should be 1 after adding item"
-    print("PASS — item added to cart")
 
     # Step 3 — go to cart and verify
 
@@ -38,7 +37,6 @@ def test_full_checkout_flow(page):
     cart = CartPage(page)
     assert cart.get_cart_items_count() == 1, "FAIL — cart should have 1 item"
     assert "Sauce Labs Backpack" in cart.get_item_names(), "FAIL — correct item not in cart"
-    print("PASS — cart contains correct item")
 
     # Step 4 — proceed to checkout
     cart.proceed_to_checkout()
@@ -54,14 +52,12 @@ def test_full_checkout_flow(page):
     # Step 5 — verify order summary
     page.wait_for_url("**/checkout-step-two.html")
     assert checkout.get_summary_title() == "Checkout: Overview", "FAIL — wrong page title"
-    print("PASS — order summary page loaded")
 
     # Step 6 — finish order
     checkout.finish_order()
     page.wait_for_url("**/checkout-complete.html")
     confirmation = checkout.get_confirmation_header()
     assert confirmation == TestData.ORDER_CONFIRMATION, f"FAIL — got '{confirmation}'"
-    print("PASS — order completed successfully")
 
     # Screenshot as evidence
     screenshot = page.screenshot()
