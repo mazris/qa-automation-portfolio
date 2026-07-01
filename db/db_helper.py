@@ -6,7 +6,7 @@ class DBHelper:
         self.connection = pymysql.connect(
             host="localhost",
             user="root",
-            password="root1234",
+            password="Sonia123",
             database="pos_test_db",
             cursorclass=pymysql.cursors.DictCursor
         )
@@ -17,6 +17,7 @@ class DBHelper:
         self.connection.close()
 
     def get_customer_by_id(self, customer_id):
+        self.connection.commit()  # force refresh transaction snapshot
         self.cursor.execute(
             "SELECT * FROM customers WHERE id = %s",
             (customer_id,)
@@ -119,10 +120,10 @@ class DBHelper:
 
         # ── Cleanup ───────────────────────────────────────
 
-        def reset_all_test_data(self):
-            self.reset_loyalty_points(1)
-            self.reset_product_stock("00123")
-            self.activate_promo_code("SAVE5")
-            self.cursor.execute("DELETE FROM transactions")
-            self.connection.commit()
+    def reset_all_test_data(self):
+        self.reset_loyalty_points(1)
+        self.reset_product_stock("00123")
+        self.activate_promo_code("SAVE5")
+        self.cursor.execute("DELETE FROM transactions")
+        self.connection.commit()
 

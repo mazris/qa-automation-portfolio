@@ -4,10 +4,19 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 import pytest
 import allure
 from api.api_client import APIClient
+from db.db_helper import DBHelper
 
 @pytest.fixture
 def client():
     return APIClient()
+
+@pytest.fixture
+def db():
+    helper = DBHelper()
+    yield helper
+    helper.reset_all_test_data()
+    helper.disconnect()
+
 
 @pytest.mark.smoke
 @allure.suite("Smoke Suite")

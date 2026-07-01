@@ -32,3 +32,24 @@ class APIClient:
         )
         return response
 
+class POSAPIClient:
+    """Client for the local mock POS backend — connected to real MySQL DB"""
+    BASE_URL = "http://127.0.0.1:5050"
+
+    def get_customer(self, customer_id):
+        response = requests.get(f"{self.BASE_URL}/customers/{customer_id}")
+        return response
+
+    def apply_promo(self, promo_code, cart_total):
+        response = requests.post(
+            f"{self.BASE_URL}/apply-promo",
+            json={"promo_code": promo_code, "cart_total": cart_total}
+        )
+        return response
+
+    def update_loyalty_points(self, customer_id, points):
+        response = requests.put(
+            f"{self.BASE_URL}/customers/{customer_id}/loyalty-points",
+            json={"points": points}
+        )
+        return response
