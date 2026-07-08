@@ -175,3 +175,7 @@ Run with automatic report:
 ./run_tests.sh smoke    # smoke suite only
 ./run_tests.sh regression  # regression suite only
 ```
+## CI/CD
+
+GitHub Actions runs the smoke and regression suites automatically 
+on every push to main. Tests run in headless mode in the CI environment.
