@@ -2,6 +2,8 @@ import allure
 import pytest
 from playwright.sync_api import sync_playwright
 from db.db_helper import DBHelper
+from pages.login_page import LoginPage
+from data.test_data import TestData
 
 def pytest_configure(config):
     config.addinivalue_line("markers", "smoke: smoke test suite")
@@ -43,4 +45,13 @@ def db():
     helper.disconnect()
 
 
-
+@pytest.fixture
+def logged_in_page(page):
+    login = LoginPage(page)
+    login.navigate()
+    login.login(
+        TestData.STANDARD_USER["username"],
+        TestData.STANDARD_USER["password"]
+    )
+    page.wait_for_url("**/inventory.html")
+    return page

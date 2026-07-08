@@ -35,3 +35,20 @@ class InventoryPage:
     def get_all_item_names(self):
         items = self.page.locator(".inventory_item_name").all()
         return [item.inner_text() for item in items]
+
+    def get_active_sort_options(self):
+        return self.page.locator(".active_option").inner_text()
+
+    def sort_by(self,option):
+        self.page.locator(".product_sort_container").select_option(option)
+
+    def get_all_item_prices(self):
+        items = self.page.locator(".inventory_item_price").all()
+        prices = [item.inner_text() for item in items]
+        return [float(price.replace("$","")) for price in prices]
+
+    def get_sort_option_value_from_name(self,option):
+        return self.page.locator(f".product_sort_container option:has-text('{option}')").get_attribute("value")
+
+
+
